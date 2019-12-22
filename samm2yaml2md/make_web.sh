@@ -38,7 +38,9 @@ while getopts "d:o:" OPTION; do
   esac
 done
   
-src=$(dirname $0)/web
+BASEDIR=$(dirname $0)
+
+src=$BASEDIR/web
 
 #
 # TODO:
@@ -46,26 +48,26 @@ src=$(dirname $0)/web
 #
 
 echo tidying up any leftover files
-./bin/cleanup_env_for_make_web.sh $OUTPUT
+$BASEDIR/bin/cleanup_env_for_make_web.sh $OUTPUT
 
 test -e $src/static.templates && echo "writing ns files to namespaces" && cp $src/static.templates/*.template $OUTPUT/templates/
 
-./bin/make_namespaces.py --target web --output $OUTPUT --yaml FIXME Datafiles/*.yml 
+$BASEDIR/bin/make_namespaces.py --target web --output $OUTPUT --yaml FIXME Datafiles/*.yml 
 
 echo "mapping namespaces to templates"
-./bin/map_web_ns2template.sh $OUTPUT
+$BASEDIR/bin/map_web_ns2template.sh $OUTPUT
 
 echo creating ./run_make_markdown_script.sh
 # generate the script that automates the calls to "make_markdown.py namespaces/foo.ns templates/generic.template"
 
-./create_make_web_markdown_script.sh $OUTPUT ./run_make_web_markdown_script.sh
+$BASEDIR/create_make_web_markdown_script.sh $OUTPUT $BASEDIR/run_make_web_markdown_script.sh
 test $? -ne 0 && echo "create_make_web_markdown_script.sh failed" && exit
 
 echo runing ./run_make_web_markdown_script.sh
 # this script is created by ./create_make_markdown_script.sh
-./run_make_web_markdown_script.sh
+$BASEDIR/run_make_web_markdown_script.sh
 
 echo "fixing up markdown files.."
-./bin/fixup_web_markdown.sh $OUTPUT/markdown/
+$BASEDIR/bin/fixup_web_markdown.sh $OUTPUT/markdown/
 
 echo "done"
