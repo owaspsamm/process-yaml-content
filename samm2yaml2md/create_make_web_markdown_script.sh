@@ -1,7 +1,9 @@
 #!/bin/bash
 
-makemarkdown=./bin/make_markdown.py
-outputsh=./run_make_web_markdown_script.sh
+BASEDIR=$(dirname $0)
+
+makemarkdown=$BASEDIR/bin/make_markdown.py
+outputsh=$BASEDIR/run_make_web_markdown_script.sh
 
 test -z $1 && echo "usage: $0 <web directory> <output_script>" && exit 1
 
