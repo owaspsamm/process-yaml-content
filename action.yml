@@ -1,6 +1,8 @@
 name: 'Samm YAML process Action'
 description: 'Process YAML files and create markdown. Needs two associated volumes: one for Datafiles (yaml) and the other for output'
-author: 'OWASP'
+author: 'fzipi'
+icon: activity
+color: blue
 inputs: 
   destination:
     description: 'Destination directory for processed markdown'
