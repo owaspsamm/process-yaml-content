@@ -1,12 +1,12 @@
-name: 'Container Action Template'
-description: 'Get started with Container actions'
-author: 'GitHub'
+name: 'Samm YAML process Action'
+description: 'Process YAML files and create markdown. Needs two associated volumes: one for Datafiles (yaml) and the other for output'
+author: 'OWASP'
 inputs: 
-  myInput:
-    description: 'Input to use'
-    default: 'world'
+  destination:
+    description: 'Destination directory for processed markdown'
+    default: 'output'
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.myInput }}
+    - ${{ inputs.destination }}

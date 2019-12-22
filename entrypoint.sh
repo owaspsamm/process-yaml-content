@@ -1,3 +1,6 @@
 #!/bin/sh -l
 
-echo "hello $1"
+echo "--- Building SAMM Web markdown"
+echo "*** Destination dir: $1"
+
+./make_web.sh $1

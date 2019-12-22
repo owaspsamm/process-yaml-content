@@ -1,0 +1,51 @@
+---
+title: {{stream:name}}
+type: stream
+url: model/{{function:name}}/{{practice:name}}/stream-{{stream:letter}}/
+business_function: {{function:name}}
+business_function_url: {{function:name}}
+practice: {{practice:name}}
+stream: {{stream:letter}}
+description: {{function:name}} / {{practice:name}}
+keywords: ["Business function", "Practice", "{{function:name}}", "{{practice:name}}"]
+
+maturity_levels:
+    level1:
+        level: {{maturity-1:number}}
+        benefit: |
+            {{activity-1:benefit}}
+        activity: |
+            {{activity-1:longDescription}}
+
+        question: {{question-1:text}}
+        quality_criteria:
+            {{question-1:quality}}
+        answers:
+            {{answerSet-1:values.text}}
+
+    level2:
+        level: {{maturity-2:number}}
+        benefit: |
+            {{activity-2:benefit}}
+        activity: |
+            {{activity-2:longDescription}}
+
+        question: {{question-2:text}}
+        quality_criteria:
+            {{question-2:quality}}
+        answers:
+            {{answerSet-2:values.text}}
+
+    level3:
+        level: {{maturity-3:number}}
+        benefit: |
+            {{activity-3:benefit}}
+        activity: |
+            {{activity-3:longDescription}}
+
+        question: {{question-3:text}}
+        quality_criteria:
+            {{question-3:quality}}
+        answers:
+            {{answerSet-3:values.text}}
+---

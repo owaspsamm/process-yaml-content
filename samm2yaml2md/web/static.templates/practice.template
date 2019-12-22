@@ -1,0 +1,26 @@
+---
+title: {{practice:name}}
+url: /model/{{function:name}}/{{practice:name}}/
+business_function: "{{function:name}}"
+business_function_url: "{{function:name}}" 
+keywords: ["Business function", "Practice", "{{practice:name}}"] 
+type: practice
+
+practice_maturity_1_description: {{practiceLevel-1:objective}}
+practice_maturity_2_description: {{practiceLevel-2:objective}}
+practice_maturity_3_description: {{practiceLevel-3:objective}}
+
+stream_a: {{stream-a:name}}
+
+stream_a_maturity_1_activity: {{stream-a-maturity-1-activity:shortDescription}}
+stream_a_maturity_2_activity: {{stream-a-maturity-2-activity:shortDescription}}
+stream_a_maturity_3_activity: {{stream-a-maturity-3-activity:shortDescription}}
+
+stream_b: {{stream-b:name}}
+
+stream_b_maturity_1_activity: {{stream-b-maturity-1-activity:shortDescription}}
+stream_b_maturity_2_activity: {{stream-b-maturity-2-activity:shortDescription}}
+stream_b_maturity_3_activity: {{stream-b-maturity-3-activity:shortDescription}}
+---
+
+{{practice:longDescription}}
