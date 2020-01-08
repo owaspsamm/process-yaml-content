@@ -53,9 +53,7 @@ src=$BASEDIR/web
 echo tidying up any leftover files
 "$BASEDIR"/bin/cleanup_env_for_make_web.sh "$OUTPUT"
 
-find /build
-
-test -e "$src/static.templates" && echo "writing ns files to namespaces" && cp "$src/static.templates/*.template" "$OUTPUT/templates/"
+test -e "$src/static.templates" && echo "writing ns files to namespaces" && cp "$src"/static.templates/*.template "$OUTPUT/templates/"
 
 "$BASEDIR"/bin/make_namespaces.py --target web --output "$OUTPUT" --yaml "$DATAFILES"/*.yml 
 
