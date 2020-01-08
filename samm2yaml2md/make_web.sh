@@ -26,9 +26,11 @@ while getopts "d:o:" OPTION; do
   case "$OPTION" in
     d)
       DATAFILES="$OPTARG"
+      echo "Datafiles directory: \'${DATAFILES}\'"
       ;;
     o)
       OUTPUT="$OPTARG"
+      echo "Output directory: \'${OUTPUT}\'"
       ;;
     ?)
       echo "ERROR: Invalid Option $OPTION Provided!"
