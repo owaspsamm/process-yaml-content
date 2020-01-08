@@ -2,7 +2,7 @@
 
 test -z "$1" && echo "usage: $0 <directory to markdown files>" && exit
 
-markdown=$1
+markdown="$1"
 
 # a final script where all sorts of cleanups happen which didn't fit in elsewhere
 for f in "$markdown"/*.md; do

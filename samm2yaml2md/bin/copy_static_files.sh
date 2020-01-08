@@ -13,5 +13,5 @@ output="$2"
 
 test -e "$src" || (echo "No such type of output $1. Try web or pdf" && exit 1)
 
-cp -r "$src/static.*" "$output"/
+cp -r "$src"/static.* "$output"/
 
