@@ -22,15 +22,15 @@ EOF
 
 echo "Called using $*"
 
-while getopts "d:o:" OPTION; do
+while getopts "o:d:" OPTION; do
   case "$OPTION" in
     d)
       DATAFILES="$OPTARG"
-      echo "Datafiles directory: \'${DATAFILES}\'"
+      echo "Datafiles directory: ${DATAFILES}."
       ;;
     o)
       OUTPUT="$OPTARG"
-      echo "Output directory: \'${OUTPUT}\'"
+      echo "Output directory: ${OUTPUT}."
       ;;
     ?)
       echo "ERROR: Invalid Option $OPTION Provided!"

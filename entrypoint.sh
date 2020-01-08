@@ -6,4 +6,4 @@ echo "--- Building SAMM Web markdown"
 
 echo "Using parameters: $*"
 
-/build/make_web.sh "$*"
+/build/make_web.sh $*
