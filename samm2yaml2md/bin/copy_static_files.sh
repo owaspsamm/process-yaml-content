@@ -1,6 +1,6 @@
 #!/bin/bash
 
-test -z $2 && echo "Usage: $0 [web|pdf] <output directory>" && exit 1
+test -z "$2" && echo "Usage: $0 [web|pdf] <output directory>" && exit 1
 
 #
 # dump all static directories to the output directory.
@@ -8,10 +8,10 @@ test -z $2 && echo "Usage: $0 [web|pdf] <output directory>" && exit 1
 # static files that are bundled with the release rather than specify our own
 # 
 
-src=$1
-output=$2
+src="$1"
+output="$2"
 
-test -e $src || (echo "No such type of output $1. Try web or pdf" && exit 1)
+test -e "$src" || (echo "No such type of output $1. Try web or pdf" && exit 1)
 
-cp -r $src/static.* $output/
+cp -r "$src/static.*" "$output"/
 
