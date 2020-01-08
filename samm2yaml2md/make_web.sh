@@ -20,6 +20,7 @@ usage: "$0" -d Datafiles_dir -o output_dir
 EOF
 }
 
+echo "Called using $*"
 
 while getopts "d:o:" OPTION; do
   case "$OPTION" in
@@ -61,13 +62,17 @@ echo creating ./run_make_markdown_script.sh
 # generate the script that automates the calls to "make_markdown.py namespaces/foo.ns templates/generic.template"
 
 "$BASEDIR"/create_make_web_markdown_script.sh "$OUTPUT" "$BASEDIR"/run_make_web_markdown_script.sh
-test $? -ne 0 && echo "create_make_web_markdown_script.sh failed" && exit
+test $? -ne 0 && echo "create_make_web_markdown_script.sh failed" && exit 1
 
 echo runing ./run_make_web_markdown_script.sh
 # this script is created by ./create_make_markdown_script.sh
 "$BASEDIR"/run_make_web_markdown_script.sh
+test $? -ne 0 && echo "running make web markdown failed" && exit 2
 
 echo "fixing up markdown files.."
 "$BASEDIR"/bin/fixup_web_markdown.sh "$OUTPUT"/markdown/
+test $? -ne 0 && echo "fixing up web markdown failed" && exit 3
 
 echo "done"
+
+exit 0
