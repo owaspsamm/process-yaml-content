@@ -5,6 +5,9 @@ branding:
   icon: 'activity'
   color: 'blue'
 inputs: 
+  datafiles:
+    description: 'Source directory with DataFiles'
+    default: 'Datafiles'
   destination:
     description: 'Destination directory for processed markdown'
     default: 'output'
@@ -12,4 +15,5 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.destination }}
+    - "-d ${{ inputs.datafiles }}"
+    - "-o ${{ inputs.destination }}"
