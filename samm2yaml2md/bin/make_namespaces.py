@@ -37,7 +37,7 @@ class Sammpdf:
     outputs:
         - 1 namespace file for each business function
     """
-    def writeWebBusinessFunctions(self, *, namespaceBase):
+    def writeWebBusinessFunctions(self, namespaceBase):
 
         for function in self.model.getBusinessFunctions(ordered=True):
             _namespace = open("{}{}.ns".format(namespaceBase, function.getName()) , 'w')
