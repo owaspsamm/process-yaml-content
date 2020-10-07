@@ -1,7 +1,7 @@
 ---
 title: {{stream:name}}
 type: stream
-url: model/{{function:name}}/{{practice:name}}/stream-{{stream:letter}}/
+url: ./model/{{function:name}}/{{practice:name}}/stream-{{stream:letter}}/
 business_function: {{function:name}}
 business_function_url: {{function:name}}
 practice: {{practice:name}}

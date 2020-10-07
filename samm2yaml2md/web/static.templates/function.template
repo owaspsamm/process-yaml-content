@@ -1,6 +1,6 @@
 ---
 title: {{function:name}}
-url: /model/{{function:name}}/
+url: ./model/{{function:name}}/
 description: {{function:name}} business function
 
 practice_1: {{practice_1:name}}

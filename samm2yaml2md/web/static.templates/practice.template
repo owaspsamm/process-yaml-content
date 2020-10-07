@@ -1,6 +1,6 @@
 ---
 title: {{practice:name}}
-url: /model/{{function:name}}/{{practice:name}}/
+url: ./model/{{function:name}}/{{practice:name}}/
 business_function: "{{function:name}}"
 business_function_url: "{{function:name}}" 
 keywords: ["Business function", "Practice", "{{practice:name}}"] 
