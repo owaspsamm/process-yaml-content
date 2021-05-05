@@ -37,7 +37,7 @@ while getopts "d:o:" OPTION; do
       ;;
   esac
 done
-  
+
 BASEDIR=$(dirname $0)
 
 src=$BASEDIR/web
@@ -52,7 +52,7 @@ $BASEDIR/bin/cleanup_env_for_make_web.sh $OUTPUT
 
 test -e $src/static.templates && echo "writing ns files to namespaces" && cp $src/static.templates/*.template $OUTPUT/templates/
 
-$BASEDIR/bin/make_namespaces.py --target web --output $OUTPUT --yaml FIXME $DATAFILES/*.yml 
+$BASEDIR/bin/make_namespaces.py --target web --output $OUTPUT --loglevel DEBUG --model $DATAFILES
 
 echo "mapping namespaces to templates"
 $BASEDIR/bin/map_web_ns2template.sh $OUTPUT

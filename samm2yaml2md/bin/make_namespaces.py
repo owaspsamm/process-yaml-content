@@ -33,7 +33,7 @@ class Sammpdf:
     """
     For consistency, we output a template and namespace files although we could output the full final result (yaml/markdown)
     This at the cost of requiring further post processing (for example, we need to fix up the casing of practice_X_url and replace spaces with hyphens.
-    
+
     outputs:
         - 1 namespace file for each business function
     """
@@ -63,9 +63,9 @@ class Sammpdf:
                             practiceLevel = self.model.getPracticeLevelBy(practice=practice, maturityLevel=maturity, trace=trace)
                             for activity in self.model.getActivitiesBy(stream=stream, practiceLevel=practiceLevel, trace=trace):
                                 _out.write("{}\n".format(activity.getTitle()))
-    
+
     """
-    write: 
+    write:
       - 1 namespace file per practice for each business functions
     """
     def writeWebPractices(self, *, namespaceBase):
@@ -86,7 +86,7 @@ class Sammpdf:
                         practiceLevel = self.model.getPracticeLevelBy(practice=practice, maturityLevel=maturity, trace=trace)
 
                         if stream.getLetter().lower() == 'a':
-                            # Hack: Only write the practiceLevel once to the namespace 
+                            # Hack: Only write the practiceLevel once to the namespace
                             _namespace.write("practiceLevel-{}: {}\n".format(maturity.getNumber(), practiceLevel.getYamlFile()))
 
                         for activity in self.model.getActivitiesBy(stream=stream, practiceLevel=practiceLevel, trace=trace):
@@ -94,7 +94,7 @@ class Sammpdf:
                 _namespace.close()
 
     """
-    write: 
+    write:
       - 1 namespace file per activity stream per practice per each business functions
     """
     def writeWebActivityStreams(self, *, namespaceBase):
@@ -328,7 +328,7 @@ class Model:
         res = list(filter(lambda er: er.data['id'] in activity.data['externalReference'], self.objs['externalReference']))
         return res
 
-        
+
     def getActivitiesBy(self, *, stream, practiceLevel, trace=False):
         if trace:
             pdb.set_trace()
@@ -413,7 +413,7 @@ class ModelObject:
         data is a dict of values (most likely loaded from a yaml template)
     """
     def __init__(self, data, filename=None):
-        self.data = data 
+        self.data = data
         self.filename = filename
 
     def setFilename(self, filename):
@@ -422,7 +422,7 @@ class ModelObject:
     @staticmethod
     def itsme(obj):
         return False
-    
+
     def getData(self):
         return self.data
 
@@ -510,7 +510,7 @@ class Activity(ModelObject):
 
     def getLongDescription(self):
         return self.data['longDescription']
-    
+
     def getTitle(self):
         return self.data['title']
 
@@ -537,21 +537,24 @@ class ExternalReference(ModelObject):
             return False
 
 
-def loadYaml(templates):
+def loadYaml(directory):
     model = Model()
+
+    templates = glob.glob(directory + '/**/*.yml', recursive=True)
+
     for t in templates:
+        logging.debug(f'Loaded file {t}')
         model._addObj(yaml.load(open(t, 'r').read(), Loader=yaml.SafeLoader), t)
 
     return model
-  
+
 def handleArgs():
     parser = argparse.ArgumentParser(description="Parse SAMM2 model files and write templates for various output formats")
     parser.add_argument("--target", "-t", choices=["web", "pdf", "misc", "all"], required=True, help="For which target to generate the namespaces for")
 
     parser.add_argument("--output", "-o", required=True, type=str, help="Directory to write the namespace files to")
-    parser.add_argument("--yaml", "-y", required=True, type=str, help="The Yaml model file")
+    parser.add_argument("--model", "-y", required=True, type=str, help="The Yaml model files directory")
     parser.add_argument("--loglevel", "-l", choices=["ERROR", "WARNING", "INFO", "DEBUG"], default="INFO", type=str, required=False, help="The log level to use")
-    parser.add_argument("yaml", nargs=argparse.REMAINDER)
 
     args = parser.parse_args()
     return args
@@ -564,11 +567,12 @@ def main():
         logging.error("handleArgs had an error: %s" % e)
         sys.exit(0)
 
-    logging.basicConfig(level = logging.INFO)
-    templates = args.yaml
-    logging.debug("Loaded %d files" % len(templates))
+    logging.basicConfig(level = args.loglevel)
+    directory = args.model
 
-    model = loadYaml(templates)
+    logging.debug(f'Loading files in {directory}')
+
+    model = loadYaml(directory)
     for (objtype, objs) in model.objs.items():
         logging.debug("loaded %d objects of type %s\n" % (len(objs), objtype))
 
@@ -600,7 +604,7 @@ def main():
 
         logging.debug("main: running writeWebActivityStreams()\n")
         sammpdf.writeWebActivityStreams(namespaceBase="{}/namespaces/{}".format(args.output, "activity-"))
-    
+
 
 if __name__ == '__main__':
     main()
