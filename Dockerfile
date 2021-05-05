@@ -4,10 +4,12 @@ FROM python AS builder
 
 WORKDIR /build
 
-RUN apt-get update && apt-get install -y --no-install-recommends apt-utils pandoc wget make xsltproc poppler-utils
-RUN wget --quiet https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.buster_amd64.deb && \
-  apt install -y ./wkhtmltox_0.12.6-1.buster_amd64.deb && \
-  rm ./wkhtmltox_0.12.6-1.buster_amd64.deb && rm -rf /var/lib/apt/*
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+  pandoc \
+  wget \
+  make \
+  && rm -rf /var/lib/apt/*
 
 COPY requirements.txt .
 RUN pip install -r requirements.txt
