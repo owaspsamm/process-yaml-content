@@ -52,7 +52,7 @@ $BASEDIR/bin/cleanup_env_for_make_web.sh $OUTPUT
 
 test -e $src/static.templates && echo "writing ns files to namespaces" && cp $src/static.templates/*.template $OUTPUT/templates/
 
-$BASEDIR/bin/make_namespaces.py --target web --output $OUTPUT --loglevel DEBUG --model $DATAFILES
+$BASEDIR/bin/make_namespaces.py --target web --output $OUTPUT --model $DATAFILES
 
 echo "mapping namespaces to templates"
 $BASEDIR/bin/map_web_ns2template.sh $OUTPUT
