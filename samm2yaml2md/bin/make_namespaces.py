@@ -301,7 +301,7 @@ class Model:
         if trace:
             pdb.set_trace()
 
-        res = list(filter(lambda a: a.data['id']==question.data['answerset'], self.objs['AnswerSet']))
+        res = list(filter(lambda a: a.data['id']==question.data['answerSet'], self.objs['AnswerSet']))
         if len(res) > 1:
             logging.warning("Found %d Answer Sets when 1 was expected\n" % len(res))
         return res[0]
@@ -351,7 +351,7 @@ class Model:
        _practice = practice.data['id']
        _maturityLevel = maturityLevel.data['id']
 
-       res = list(filter(lambda p: p.data['practice']==_practice and p.data['maturitylevel']==_maturityLevel, self.objs['PracticeLevel']))
+       res = list(filter(lambda p: p.data['practice']==_practice and p.data['maturityLevel']==_maturityLevel, self.objs['PracticeLevel']))
        if len(res) > 1:
            logging.warning("Oups: Matched more than 1 PracticeLevel by practice=%s and maturityLevel=%s\n" % (str(practice), str(maturityLevel)))
 
@@ -487,7 +487,7 @@ class MaturityLevel(ModelObject):
 class PracticeLevel(ModelObject):
     @staticmethod
     def itsme(obj):
-        if 'maturitylevel' in obj:
+        if 'maturityLevel' in obj:
             return True
         return False
 
@@ -517,7 +517,7 @@ class Activity(ModelObject):
 class Question(ModelObject):
     @staticmethod
     def itsme(obj):
-        if 'answerset' in obj:
+        if 'answerSet' in obj:
             return True
         return False
 
