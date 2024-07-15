@@ -20,6 +20,7 @@ import re
 import logging
 import numbers
 import pdb
+import os
 
 """
     replace all \n- with \n<indent spaces>-
@@ -194,6 +195,9 @@ if __name__ == '__main__':
         for ns,file in namespaces.items():
             yamlData[ns] = yaml.load(open(file, 'r').read(), Loader=yaml.SafeLoader)
             logging.debug("DD: %s (%s) -> %s" % (file, ns, yamlData[ns]))
+            basename = os.path.basename(file)
+            filename_without_extension = os.path.splitext(basename)[0]
+            yamlData[ns]["filename"] = filename_without_extension
 
     except Exception as err:
         logging.error("EE: failed to parse yaml file %s: %s" % (file, err))
