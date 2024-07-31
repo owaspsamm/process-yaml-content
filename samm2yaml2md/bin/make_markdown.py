@@ -156,6 +156,19 @@ def doit(m):
 
     return pyObj2md(val, m.start(0))
 
+"""
+    shortens the filenames dividing by slashes
+    (i.e. D-Security-Architecture => D-SA)
+"""
+def get_short_filename(original_string):
+    sections = original_string.split('-')
+
+    if len(sections) == 1:
+        return original_string
+
+    new_name = sections[0] + '-' + ''.join(part[0] for part in sections[1:])
+    return new_name
+
 if __name__ == '__main__':
     if len(sys.argv) != 3:
         print("Usage: %s <yaml.namespace> <template.markdown>" % sys.argv[0])
@@ -198,6 +211,7 @@ if __name__ == '__main__':
             basename = os.path.basename(file)
             filename_without_extension = os.path.splitext(basename)[0]
             yamlData[ns]["filename"] = filename_without_extension
+            yamlData[ns]["shortFilename"] = get_short_filename(filename_without_extension)
 
     except Exception as err:
         logging.error("EE: failed to parse yaml file %s: %s" % (file, err))

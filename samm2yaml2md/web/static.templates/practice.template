@@ -4,6 +4,8 @@ url: ./model/{{function:name}}/{{practice:name}}/
 business_function: "{{function:name}}"
 business_function_url: "{{function:name}}" 
 keywords: ["Business function", "Practice", "{{practice:name}}"] 
+aliases: 
+    - /model/{{practice:shortFilename}}
 type: practice
 
 practice_maturity_1_description: {{practiceLevel-1:objective}}
