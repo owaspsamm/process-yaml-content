@@ -1,18 +1,18 @@
 ---
 title: {{stream:name}}
 type: stream
-url: model/{{function:name}}/{{practice:name}}/stream-{{stream:letter}}/
+url: ./model/{{function:lowercaseFilename}}/{{practice:originalPracticeEngName}}/stream-{{stream:letter}}/
 business_function: {{function:name}}
-business_function_url: {{function:name}}
+business_function_url: {{function:lowercaseFilename}}
 practice: {{practice:name}}
 stream: {{stream:letter}}
 description: {{function:name}} / {{practice:name}}
 keywords: ["Business function", "Practice", "{{function:name}}", "{{practice:name}}"]
 aliases: 
-    - /model/{{activity-1:filename}}
-    - /model/{{activity-2:filename}}
-    - /model/{{activity-3:filename}}
-    - /model/{{stream:filename}}
+    - {{stream:langPrefix}}/model/{{stream:filename}}-{{maturity-1:number}}
+    - {{stream:langPrefix}}/model/{{stream:filename}}-{{maturity-2:number}}
+    - {{stream:langPrefix}}/model/{{stream:filename}}-{{maturity-3:number}}
+    - {{stream:langPrefix}}/model/{{stream:filename}}
 
 maturity_levels:
     level1:

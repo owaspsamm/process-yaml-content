@@ -35,7 +35,7 @@ def reformatMultiParagraph2(l, indent):
     m = re.sub("\n-", "\n{}-".format(" " * indent), l)
     l = re.sub("\n\*", "\n{}*".format(" " * indent), m)
     #pdb.set_trace()
-    m = re.sub(r"\n\n([A-Za-z].+)", r"\n\n{}\1".format(" " * indent), l)
+    m = re.sub(r"\n\n([\w\s].+)", r"\n\n{}\1".format(" " * indent), l)
     return m
 
 """
@@ -168,15 +168,30 @@ def get_short_filename(original_string):
 
     new_name = sections[0] + '-' + ''.join(part[0] for part in sections[1:])
     return new_name
+   
+def get_original_eng_practice_name_from_filename(filename):
+    # Get the base name of the file (without the directory path and extension)
+    basename = os.path.splitext(os.path.basename(filename))[0]
+    
+    # Split the filename by the first hyphen
+    parts = basename.split('-', 1)
+    
+    # If there was a hyphen, return the part after it, converted to lowercase
+    if len(parts) > 1:
+        result = parts[1].lower()
+        return result
+    else:
+        return filename
 
 if __name__ == '__main__':
-    if len(sys.argv) != 3:
+    if len(sys.argv) != 3 and len(sys.argv) != 4:
         print("Usage: %s <yaml.namespace> <template.markdown>" % sys.argv[0])
         sys.exit(1)
 
     logging.basicConfig(level = logging.INFO)
     arg_ns = sys.argv[1]
     arg_tmpl = sys.argv[2]
+    language = sys.argv[3] if len(sys.argv) > 3 else None
     no_ns='NO_NS'
 
     yamlData = {}
@@ -211,7 +226,30 @@ if __name__ == '__main__':
             basename = os.path.basename(file)
             filename_without_extension = os.path.splitext(basename)[0]
             yamlData[ns]["filename"] = filename_without_extension
+            yamlData[ns]["lowercaseFilename"] = filename_without_extension.lower()
+            '''
+            TODO
+            Previously the urls for the security practices and business functions were derived from the name. That worked until we had translations in other languages
+            because now strategy-and-metrics is going to be different in different languages. That way we will have multiple urls for each language. 
+            I changed the logic to use the filenames which are always in English. However, the security practice filenames are different from the practice names. 
+            Example - Requirements-driven Testing is in filename D-Requirements-Testing. Strategy and Metrics is in filename Strategy-Metrics, etc.
+            Using the practice filename as url is going to change and break existing links (url will be requirements-testing instead of requirements-driven-testing).
+            One of my suggestions is to change the filenames to be correct and derive the URL from there (see function get_original_eng_practice_name_from_filename). 
+            Other possibility is using some config file from the website repository that will tell us which practice/function from what URL should be served
+            or hardcoding the urls here. Until we made a decision I am going to use the filenames as URL and hardcode those URLs of practices that have difference between the filename and practice name.
+            '''
+            practiceUrl = get_original_eng_practice_name_from_filename(file)
+            if ns == 'practice' or ns.startswith('practice_'):
+                practiceId = yamlData[ns]['id']
+                if practiceId == "32b3bdd85d3a4d53827960004f9d1c7e":
+                    practiceUrl = "strategy-and-metrics"
+                if practiceId == "483a0a1b78264cafbc470ce72d557332":
+                    practiceUrl = "education-and-guidance"
+                if practiceId == "66fb99798fe946e4979a2de98e9d6f8b":
+                    practiceUrl = "requirements-driven-testing"
+            yamlData[ns]["originalPracticeEngName"] = practiceUrl
             yamlData[ns]["shortFilename"] = get_short_filename(filename_without_extension)
+            yamlData[ns]["langPrefix"] = '' if language is None else f'/{language}'
 
     except Exception as err:
         logging.error("EE: failed to parse yaml file %s: %s" % (file, err))
