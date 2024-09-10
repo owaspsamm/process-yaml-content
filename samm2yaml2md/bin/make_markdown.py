@@ -35,7 +35,7 @@ def reformatMultiParagraph2(l, indent):
     m = re.sub("\n-", "\n{}-".format(" " * indent), l)
     l = re.sub("\n\*", "\n{}*".format(" " * indent), m)
     #pdb.set_trace()
-    m = re.sub(r"\n\n([\w\s].+)", r"\n\n{}\1".format(" " * indent), l)
+    m = re.sub(r"\n\n(?!\s)([\w].*)", r"\n\n{}\1".format(" " * indent), l, flags=re.UNICODE)
     return m
 
 """
@@ -247,6 +247,8 @@ if __name__ == '__main__':
                     practiceUrl = "education-and-guidance"
                 if practiceId == "66fb99798fe946e4979a2de98e9d6f8b":
                     practiceUrl = "requirements-driven-testing"
+                if practiceId == "102ad02df5dc4a8eb3837ef4ca2c1af4":
+                    practiceUrl = "policy-and-compliance"
             yamlData[ns]["originalPracticeEngName"] = practiceUrl
             yamlData[ns]["shortFilename"] = get_short_filename(filename_without_extension)
             yamlData[ns]["langPrefix"] = '' if language is None else f'/{language}'
