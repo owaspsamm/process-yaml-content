@@ -40,7 +40,8 @@ class Sammpdf:
     def writeWebBusinessFunctions(self, namespaceBase):
 
         for function in self.model.getBusinessFunctions(ordered=True):
-            _namespace = open("{}{}.ns".format(namespaceBase, function.getName()) , 'w')
+            functionName = function.getOriginalEngFileNameNoExt()
+            _namespace = open("{}{}.ns".format(namespaceBase, functionName) , 'w')
             logging.debug("writing ns %s\n" % _namespace.name)
 
             _namespace.write("function:%s\n" % function.getYamlFile())
@@ -72,8 +73,9 @@ class Sammpdf:
         trace = False
 
         for function in self.model.getBusinessFunctions(ordered=True):
+            functionName = function.getOriginalEngFileNameNoExt()
             for practice in self.model.getPracticesBy(function=function):
-                _namespace = open("{}{}-{}.ns".format(namespaceBase, function.getName(), practice.getShortName()), 'w')
+                _namespace = open("{}{}-{}.ns".format(namespaceBase, functionName, practice.getShortName()), 'w')
                 logging.debug("writing ns {}\n".format(_namespace.name))
 
                 _namespace.write("function: %s\n" % function.getYamlFile())
@@ -101,10 +103,11 @@ class Sammpdf:
         trace = False
 
         for function in self.model.getBusinessFunctions(ordered=True):
+            functionName = function.getOriginalEngFileNameNoExt()
             for practice in self.model.getPracticesBy(function=function):
                 for stream in self.model.getStreamsBy(practice=practice):
 
-                    _namespace = open("{}{}-{}-{}.ns".format(namespaceBase, function.getName(), practice.getShortName(), stream.getLetter()), 'w')
+                    _namespace = open("{}{}-{}-{}.ns".format(namespaceBase, functionName, practice.getShortName(), stream.getLetter()), 'w')
                     logging.debug("writing ns {}\n".format(_namespace.name))
 
                     _namespace.write("function: {}\n".format(function.getYamlFile()))
@@ -428,6 +431,10 @@ class ModelObject:
 
     def getYamlFile(self):
         return self.filename
+    
+    def getOriginalEngFileNameNoExt(self):
+         basename = os.path.basename(self.filename)
+         return os.path.splitext(basename)[0]
 
 class BusinessFunction(ModelObject):
     @staticmethod
@@ -473,9 +480,6 @@ class Practice(ModelObject):
 class MaturityLevel(ModelObject):
     @staticmethod
     def itsme(obj):
-        """
-        no easy way of identifying it. has 3 keys, id, number, description.
-        """
         try:
             return obj['type'] == 'MaturityLevel'
         except KeyError:

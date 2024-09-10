@@ -1,14 +1,14 @@
 ---
 title: {{function:name}}
-url: ./model/{{function:name}}/
+url: ./model/{{function:lowercaseFilename}}/
 description: {{function:name}} business function
 
 practice_1: {{practice_1:name}}
-practice_1_url: {{practice_1:name}}
+practice_1_url: {{practice_1:originalPracticeEngName}}
 practice_2: {{practice_2:name}}
-practice_2_url: {{practice_2:name}}
+practice_2_url: {{practice_2:originalPracticeEngName}}
 practice_3: {{practice_3:name}}
-practice_3_url: {{practice_3:name}}
+practice_3_url: {{practice_3:originalPracticeEngName}}
 
 keywords: ["Business function"]
 ---
