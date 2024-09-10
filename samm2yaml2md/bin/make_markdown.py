@@ -247,7 +247,7 @@ if __name__ == '__main__':
                     practiceUrl = "education-and-guidance"
                 if practiceId == "66fb99798fe946e4979a2de98e9d6f8b":
                     practiceUrl = "requirements-driven-testing"
-                if practiceId == "102ad02df5dc4a8eb3837ef4ca2c1af4":
+                if practiceId == "be9e7ddb98b84abe8b9e185b979ccf60":
                     practiceUrl = "policy-and-compliance"
             yamlData[ns]["originalPracticeEngName"] = practiceUrl
             yamlData[ns]["shortFilename"] = get_short_filename(filename_without_extension)
