@@ -9,6 +9,7 @@ test -z "$1" && echo "usage: $0 <web directory> <output_script>" && exit 1
 
 pfx="$1"
 outputsh="$2"
+language="$3"
 
 test -e "$pfx" || (echo "Invalid directory $pfx" && exit)
 rm -f "$outputsh"
@@ -20,7 +21,7 @@ rm -f "$outputsh"
 #
 for f in "$pfx"/namespaces/*.ns; do 
     _f=$(basename $f)
-    echo "$makemarkdown" "$f" "$pfx"/templates/"$(cat "$pfx"/ns2template.mapping/"$_f")" ">" "$pfx"/markdown/"$(basename "$f" .ns)".md >> "$outputsh"
+    echo "$makemarkdown" "$f" "$pfx"/templates/"$(cat "$pfx"/ns2template.mapping/"$_f")" "$language" ">" "$pfx"/markdown/"$(basename "$f" .ns)".md >> "$outputsh"
 done
 
 chmod 755 "$outputsh"

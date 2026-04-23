@@ -15,19 +15,22 @@
 # USAGE STATEMENT
 function usage() {
 cat << EOF
-usage: $0 -d Datafiles_dir -o output_dir
+usage: $0 -d Datafiles_dir -o output_dir -l language_short_code
 
 EOF
 }
 
 
-while getopts "d:o:" OPTION; do
+while getopts "d:o:l:" OPTION; do
   case $OPTION in
     d)
       DATAFILES=$OPTARG
       ;;
     o)
       OUTPUT=$OPTARG
+      ;;
+    l)
+      LANGUAGE=$OPTARG
       ;;
     ?)
       echo "ERROR: Invalid Option $OPTION Provided!"
@@ -60,7 +63,7 @@ $BASEDIR/bin/map_web_ns2template.sh $OUTPUT
 echo creating ./run_make_markdown_script.sh
 # generate the script that automates the calls to "make_markdown.py namespaces/foo.ns templates/generic.template"
 
-$BASEDIR/create_make_web_markdown_script.sh $OUTPUT $BASEDIR/run_make_web_markdown_script.sh
+$BASEDIR/create_make_web_markdown_script.sh $OUTPUT $BASEDIR/run_make_web_markdown_script.sh $LANGUAGE
 test $? -ne 0 && echo "create_make_web_markdown_script.sh failed" && exit
 
 echo runing ./run_make_web_markdown_script.sh
